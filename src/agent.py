@@ -88,9 +88,9 @@ class Agent():
 
         # Get max action from max Q values (for next states) from target model
 
-        indexes_of_Q_target_for_next_states = self.qnetwork_target(next_states).detach().max(1)[1].unsqueeze(1)
-        Q_local_for_next_states = self.qnetwork_local(next_states).detach()
-        Q_thetas = Q_local_for_next_states.gather(1, indexes_of_Q_target_for_next_states)
+        indexes_of_Q_local_for_next_states = self.qnetwork_local(next_states).detach().max(1)[1].unsqueeze(1)
+        Q_target_for_next_states = self.qnetwork_target(next_states).detach()
+        Q_thetas = Q_target_for_next_states.gather(1, indexes_of_Q_local_for_next_states)
 
         # Get max predicted Q values (for next states) from target model
         # Q_targets_next = self.qnetwork_target(next_states).detach().max(1)[0].unsqueeze(1)
